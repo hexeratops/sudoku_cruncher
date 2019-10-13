@@ -85,8 +85,6 @@ impl BoardFactory {
                 };
                 self.moves.push(game_move);
             } else {
-                let mut rolled_back = false;
-
                 loop {
                     match self.moves.pop() {
                         Some(prev_move) => {
@@ -96,7 +94,6 @@ impl BoardFactory {
                                     game_move: GameMove::new(prev_move.game_move.x_pos, prev_move.game_move.y_pos, prev_move.game_move.grid_index, prev_move.game_move.value + 1)
                                 };
                                 self.moves.push(game_move);
-                                rolled_back = true;
                                 break;
                             }
                         },
@@ -105,10 +102,6 @@ impl BoardFactory {
                             break;
                         }
                     }
-                }
-
-                if !rolled_back {
-                    status = ValidationState::Unsolvable;
                 }
             }
         }
