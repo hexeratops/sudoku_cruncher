@@ -11,12 +11,12 @@ If the digit goes all the way to the highest possible value (9 in a 3x3 grid) an
 
 To implement this project, I designed two pieces: a factory and a board object. The factory keeps track of the setup process and the moves which construct the game board. I wanted to design the application so that each time the solution is iterated, a new game board is generated. 
 
-The benefit of this is that we could easily reuse the board object for other purposes. It contains only the game logic for sudoku, no long-term state storage and none of the generator logic besides a constructor. If you wanted to make this the engine of an actual game, that wouldn't be very hard to accomplish; just rip out the the factory and write a new one hooked into a UI. The downside is that regenerating the board every iteration instead of mutating existing data structures takes more processing time, but none the less, it provides some interesting benefits.
+The benefit of this is that we could easily reuse the board object for other purposes. It contains only the game logic for sudoku; it contains no long-term state storage or any of the generator logic besides a constructor. If you wanted to make this the engine of an actual game, that wouldn't be very hard to accomplish; just rip out the the factory and write a new one hooked into a UI. The downside is that regenerating the board every iteration instead of mutating existing data structures takes more processing time. Never the less, it provides some interesting benefits.
 
 Another "interesting" choice I made was doing all of this with a 1D array just because I could. I can't say if it was the right decision as it caused a few headaches, but I made it work.
 
 # Usage
-call sudoku_cruncher <board size> <filename.sku>
+`sudoku_cruncher <board size> <filename.sku>`
 
 - The board size can be 2 or 3 to represent 2x2 and 3x3 puzzles. I haven't programmed in hexadecimal support or oddly shaped boards (though it probably could be tweaked to do so.)
 - The filename argument contains the board. Examples are provided in the repository, but it's pretty lenient.
