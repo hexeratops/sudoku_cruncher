@@ -11,7 +11,7 @@ pub struct GameBoard {
 }
 
 impl GameBoard {
-    pub fn populated(grid_size: u8, board: &Vec<BoardMove>) -> Result<Self, Box<dyn Error>> {
+    pub fn populated(grid_size: u8, board: &[BoardMove]) -> Result<Self, Box<dyn Error>> {
         let expected_dim: usize = (grid_size * grid_size * grid_size * grid_size).into();
         let mut game_board: Vec<u8> = vec![0; expected_dim];
 
@@ -20,13 +20,13 @@ impl GameBoard {
                 BoardMoveType::Setup => {
                     let game_move = &cell.game_move;
                     let index = board_indexing::from_position(grid_size, game_move.grid_index, game_move.x_pos, game_move.y_pos);
-                    let pos = game_board.get_mut(index as usize).ok_or(format!("Failed to get index {} (x: {}, y: {}, g:{}, gs: {})", index, game_move.x_pos, game_move.y_pos, game_move.grid_index, grid_size))?;
+                    let pos = game_board.get_mut(index as usize).ok_or_else(|| format!("Failed to get index {} (x: {}, y: {}, g:{}, gs: {})", index, game_move.x_pos, game_move.y_pos, game_move.grid_index, grid_size))?;
                     *pos = game_move.value;
                 },
                 BoardMoveType::Reversable => {
                     let game_move = &cell.game_move;
                     let index = board_indexing::from_position(grid_size, game_move.grid_index, game_move.x_pos, game_move.y_pos);
-                    let pos = game_board.get_mut(index as usize).ok_or(format!("Failed to get index {} (x: {}, y: {}, g:{}, gs: {})", index, game_move.x_pos, game_move.y_pos, game_move.grid_index, grid_size))?;
+                    let pos = game_board.get_mut(index as usize).ok_or_else(|| format!("Failed to get index {} (x: {}, y: {}, g:{}, gs: {})", index, game_move.x_pos, game_move.y_pos, game_move.grid_index, grid_size))?;
                     *pos = game_move.value;
                 }
             }
@@ -150,9 +150,9 @@ impl GameBoard {
                     }
                     print!("|");
                 }
-                println!("");
+                println!();
             }
-            println!("");
+            println!();
         }
     }
 }

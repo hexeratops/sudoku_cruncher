@@ -5,7 +5,7 @@ use std::env;
 use game::board_factory::BoardFactory;
 use game::validation_state::ValidationState;
 
-fn collect_args(args: &Vec<String>) -> Result<(u8, String), &'static str> {
+fn collect_args(args: &[String]) -> Result<(u8, String), &'static str> {
     if args.len() != 3 {
         return Err("Provided invalid CLI arguments");
     }
