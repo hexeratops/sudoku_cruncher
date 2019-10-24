@@ -57,7 +57,7 @@ impl BoardFactory {
 
         let mut status = match board.validate() {
             Ok(_) => ValidationState::NextMove,
-            Err(_) => match self.moves.last().ok_or("Game board is empty")?.move_type {
+            Err(_) => match self.moves.last().expect("Game board is empty").move_type {
                 BoardMoveType::Setup => ValidationState::Unsolvable,
                 BoardMoveType::Reversable => ValidationState::BadMove,
             }
@@ -77,7 +77,7 @@ impl BoardFactory {
                 }
             }
         } else if let ValidationState::BadMove = status {
-            let bad_move = self.moves.pop().ok_or("Game board is empty")?;
+            let bad_move = self.moves.pop().expect("Game board is empty");
             if bad_move.game_move.value != self.grid_dim * self.grid_dim {
                 let game_move = BoardMove {
                     move_type: BoardMoveType::Reversable,
